@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>SentinelOne Management Server Report</title>
+
+    <style>
+        html {
+            color: #000;
+            background: #FFF;
+        }
+
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        fieldset, img {
+            border: 0;
+        }
+
+        address, caption, cite, code, dfn, em, strong, th, var {
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        caption, th {
+            text-align: left;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 100%;
+            font-weight: normal;
+        }
+
+        q:before, q:after {
+            content: '';
+        }
+
+        abbr, acronym {
+            border: 0;
+            font-variant: normal;
+        }
+
+        sup {
+            vertical-align: text-top;
+        }
+
+        sub {
+            vertical-align: text-bottom;
+        }
+
+        input, textarea, select {
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+        }
+
+        input, textarea, select {
+            *font-size: 100%;
+        }
+
+        legend {
+            color: #000;
+        }
+
+        #yui3-css-stamp.cssreset {
+            display: none;
+        }
+
+        body {
+            font-family: 'Lato', Helvetica, sans-serif;
+            color: #566573;
+            /* line-height: 1.5; */
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h2 {
+            font-size: 20px;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        hr {
+            border-top: 1px solid #ddd;
+        }
+
+        p {
+            margin-bottom: 18px;
+        }
+
+        /* Helps prevent wkhtmltopdf from breaking up content while generating PDF */
+        table, tr, td, th, tbody, thead, tfoot {
+            page-break-inside: avoid !important;
+        }
+
+        .TableMain {
+            width: 1040px;
+            margin: auto;
+            /* border: 1px solid #D8D8D8; */
+        }
+
+            .TableMain td {
+                padding: 20px 20px 0px 20px;
+                vertical-align: top;
+                text-align: left;
+                /* border: 1px solid gainsboro; */
+            }
+
+        th.col1, th.col3 {
+            width: 200px;
+        }
+
+        .TableIcon {
+            padding: 0;
+            margin: 0;
+        }
+
+        .TableIcon td {
+            padding: 0;
+            margin: 0;
+        }
+
+        .TableTitle {
+            /* border: 1px solid black; */
+        }
+
+            .TableTitle td {
+                padding: 0;
+            }
+
+        .TableKPI { /* border: 1px solid black; */
+            width: 200px;
+            margin-right: 0px;
+            margin-left: auto;
+        }
+
+            .TableKPI td {
+                padding: 0px 0px 0px 25px;
+                vertical-align: top;
+                text-align: right;
+                border-left: 1px solid gainsboro;
+            }
+
+        .S1Purple {
+            color: #952bf9;
+            font-weight: bold;
+        }
+
+        .S1Red {
+            color: #e74c3c ;
+            font-weight: bold;
+        }
+
+        .S1Green {
+            color: #27AE60 ;
+            font-weight: bold;
+        }
+
+        .S1Active {
+            color: 	#f15c51 ;
+            font-weight: bold;
+        }
+
+        .S1Mitigated {
+            color: #f1936d ;
+            font-weight: bold;
+        }
+
+        .S1Blocked {
+            color: #626971 ;
+            font-weight: bold;
+        }
+
+        .S1Suspicious {
+            color: #e8c574 ;
+            font-weight: bold;
+        }
+
+        .SpacePadding {
+            display: inline-block;
+            padding: 0px 0px 20px 0px;
+        }
+
+        .SmallText {
+            font-size: 16px;
+            line-height: 16px;
+            font-weight: bold;
+        }
+
+        .MediumText {
+            font-size: 20px;
+            line-height: 20px;
+            font-weight: bold;
+        }
+
+        .LargeText {
+            font-size: 24px;
+            line-height: 24px;
+            font-weight: bold;
+        }
+
+        #newspaper-a {
+            font-family: 'Helvetica', 'Helvetica Neue', 'Arial', sans-serif;
+            font-size: 14px;
+            margin: 20px 0px 25px 0px;
+            width: 800px;
+            text-align: left;
+            border-collapse: collapse;
+            border: 1px solid darkgray;
+        }
+
+            #newspaper-a td {
+                padding: 5px 7px 5px 7px;
+                color: #566573;
+                max-width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border-top: 1px solid gainsboro;
+            }
+
+            #newspaper-a th {
+                padding: 7px 7px 7px 7px;
+                font-weight: normal;
+                font-size: 14px;
+                color: #566573;
+                background-color: #e8e8e8;
+                font-weight: bold;
+                border-bottom: 1px dashed darkgray;
+            }
+
+            #newspaper-a tfoot {
+                padding: 5px 7px 5px 7px;
+                font-weight: normal;
+                font-size: 14px;
+                color: #566573;
+                background-color: #e8e8e8;
+                font-weight: bold;
+                border-top: 1px dashed darkgray;
+            }
+
+            #newspaper-a tbody tr:hover td {
+                color: #339;
+                background: #d0dafd;
+            }
+
+        .DivChart {
+            width: 800px;
+            height: 200px;
+        }
+    </style>
+
+</head>
+
+<script type="text/javascript">
+	// ============================================================================================================================
+	// This script section makes it possible for the end-user to dynamically sort the table
+	// ============================================================================================================================
+	var stIsIE = /*@cc_on!@*/false;
+	sorttable = {
+	  init: function() {
+		if (arguments.callee.done) return;
+		arguments.callee.done = true;
+		if (_timer) clearInterval(_timer);
+		if (!document.createElement || !document.getElementsByTagName) return;
+		sorttable.DATE_RE = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d)$/;
+		forEach(document.getElementsByTagName('table'), function(table) {
+		  if (table.className.search(/\bsortable\b/) != -1) {
+			sorttable.makeSortable(table);
+		  }
+		});
+		sorttable.innerSortFunction.apply(document.getElementById('defaultSort'), [])
+		sorttable.innerSortFunction.apply(document.getElementById('defaultSort'), [])
+	  },
+	  makeSortable: function(table) {
+		if (table.getElementsByTagName('thead').length == 0) {
+		  the = document.createElement('thead');
+		  the.appendChild(table.rows[0]);
+		  table.insertBefore(the,table.firstChild);
+		}
+		if (table.tHead == null) table.tHead = table.getElementsByTagName('thead')[0];
+		if (table.tHead.rows.length != 1) return;
+		sortbottomrows = [];
+		for (var i=0; i<table.rows.length; i++) {
+		  if (table.rows[i].className.search(/\bsortbottom\b/) != -1) {
+			sortbottomrows[sortbottomrows.length] = table.rows[i];
+		  }
+		}
+		if (sortbottomrows) {
+		  if (table.tFoot == null) {
+			tfo = document.createElement('tfoot');
+			table.appendChild(tfo);
+		  }
+		  for (var i=0; i<sortbottomrows.length; i++) {
+			tfo.appendChild(sortbottomrows[i]);
+		  }
+		  delete sortbottomrows;
+		}
+		headrow = table.tHead.rows[0].cells;
+		for (var i=0; i<headrow.length; i++) {
+		  if (!headrow[i].className.match(/\bsorttable_nosort\b/)) {
+			mtch = headrow[i].className.match(/\bsorttable_([a-z0-9]+)\b/);
+			if (mtch) { override = mtch[1]; }
+			  if (mtch && typeof sorttable["sort_"+override] == 'function') {
+				headrow[i].sorttable_sortfunction = sorttable["sort_"+override];
+			  } else {
+				headrow[i].sorttable_sortfunction = sorttable.guessType(table,i);
+			  }
+			  headrow[i].sorttable_columnindex = i;
+			  headrow[i].sorttable_tbody = table.tBodies[0];
+			  dean_addEvent(headrow[i],"click", sorttable.innerSortFunction = function(e) {
+			  if (this.className.search(/\bsorttable_sorted\b/) != -1) {
+				sorttable.reverse(this.sorttable_tbody);
+				this.className = this.className.replace('sorttable_sorted','sorttable_sorted_reverse');
+				this.removeChild(document.getElementById('sorttable_sortfwdind'));
+				sortrevind = document.createElement('span');
+				sortrevind.id = "sorttable_sortrevind";
+				sortrevind.innerHTML = stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25BE;';
+				this.appendChild(sortrevind);
+				return;
+			  }
+			  if (this.className.search(/\bsorttable_sorted_reverse\b/) != -1) {
+				sorttable.reverse(this.sorttable_tbody);
+				this.className = this.className.replace('sorttable_sorted_reverse','sorttable_sorted');
+				this.removeChild(document.getElementById('sorttable_sortrevind'));
+				sortfwdind = document.createElement('span');
+				sortfwdind.id = "sorttable_sortfwdind";
+				sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25B4;';
+				this.appendChild(sortfwdind);
+				return;
+			  }
+			  theadrow = this.parentNode;
+			  forEach(theadrow.childNodes, function(cell) {
+				if (cell.nodeType == 1) {
+				  cell.className = cell.className.replace('sorttable_sorted_reverse','');
+				  cell.className = cell.className.replace('sorttable_sorted','');
+				}
+			  });
+			  sortfwdind = document.getElementById('sorttable_sortfwdind');
+			  if (sortfwdind) { sortfwdind.parentNode.removeChild(sortfwdind); }
+			  sortrevind = document.getElementById('sorttable_sortrevind');
+			  if (sortrevind) { sortrevind.parentNode.removeChild(sortrevind); }
+			  this.className += ' sorttable_sorted';
+			  sortfwdind = document.createElement('span');
+			  sortfwdind.id = "sorttable_sortfwdind";
+			  sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25B4;';
+			  this.appendChild(sortfwdind);
+				row_array = [];
+				col = this.sorttable_columnindex;
+				rows = this.sorttable_tbody.rows;
+				for (var j=0; j<rows.length; j++) {
+				  row_array[row_array.length] = [sorttable.getInnerText(rows[j].cells[col]), rows[j]];
+				}
+				row_array.sort(this.sorttable_sortfunction);
+				// row_array.reverse();
+				tb = this.sorttable_tbody;
+				for (var j=0; j<row_array.length; j++) {
+				  tb.appendChild(row_array[j][1]);
+				}
+				delete row_array;
+			  });
+			}
+		}
+	  },
+	  guessType: function(table, column) {
+		sortfn = sorttable.sort_alpha;
+		for (var i=0; i<table.tBodies[0].rows.length; i++) {
+		  text = sorttable.getInnerText(table.tBodies[0].rows[i].cells[column]);
+		  if (text != '') {
+			if (text.match(/^-?[£$¤]?[\d,.]+%?$/)) {
+			  return sorttable.sort_numeric;
+			}
+			possdate = text.match(sorttable.DATE_RE)
+			if (possdate) {
+			  first = parseInt(possdate[1]);
+			  second = parseInt(possdate[2]);
+			  if (first > 12) {
+				return sorttable.sort_ddmm;
+			  } else if (second > 12) {
+				return sorttable.sort_mmdd;
+			  } else {
+				sortfn = sorttable.sort_ddmm;
+			  }
+			}
+		  }
+		}
+		return sortfn;
+	  },
+	  getInnerText: function(node) {
+		if (!node) return "";
+		hasInputs = (typeof node.getElementsByTagName == 'function') &&
+					 node.getElementsByTagName('input').length;
+		if (node.getAttribute("sorttable_customkey") != null) {
+		  return node.getAttribute("sorttable_customkey");
+		}
+		else if (typeof node.textContent != 'undefined' && !hasInputs) {
+		  return node.textContent.replace(/^\s+|\s+$/g, '');
+		}
+		else if (typeof node.innerText != 'undefined' && !hasInputs) {
+		  return node.innerText.replace(/^\s+|\s+$/g, '');
+		}
+		else if (typeof node.text != 'undefined' && !hasInputs) {
+		  return node.text.replace(/^\s+|\s+$/g, '');
+		}
+		else {
+		  switch (node.nodeType) {
+			case 3:
+			  if (node.nodeName.toLowerCase() == 'input') {
+				return node.value.replace(/^\s+|\s+$/g, '');
+			  }
+			case 4:
+			  return node.nodeValue.replace(/^\s+|\s+$/g, '');
+			  break;
+			case 1:
+			case 11:
+			  var innerText = '';
+			  for (var i = 0; i < node.childNodes.length; i++) {
+				innerText += sorttable.getInnerText(node.childNodes[i]);
+			  }
+			  return innerText.replace(/^\s+|\s+$/g, '');
+			  break;
+			default:
+			  return '';
+		  }
+		}
+	  },
+	  reverse: function(tbody) {
+		newrows = [];
+		for (var i=0; i<tbody.rows.length; i++) {
+		  newrows[newrows.length] = tbody.rows[i];
+		}
+		for (var i=newrows.length-1; i>=0; i--) {
+		   tbody.appendChild(newrows[i]);
+		}
+		delete newrows;
+	  },
+	  sort_numeric: function(a,b) {
+		aa = parseFloat(a[0].replace(/[^0-9.-]/g,''));
+		if (isNaN(aa)) aa = 0;
+		bb = parseFloat(b[0].replace(/[^0-9.-]/g,''));
+		if (isNaN(bb)) bb = 0;
+		return aa-bb;
+	  },
+		sort_alpha: function(a,b) {
+			if (a[0].toLowerCase()==b[0].toLowerCase()) return 0;
+			if (a[0].toLowerCase()<b[0].toLowerCase()) return -1;
+			return 1;
+		  },
+		sort_ddmm: function(a,b) {
+		mtch = a[0].match(sorttable.DATE_RE);
+		y = mtch[3]; m = mtch[2]; d = mtch[1];
+		if (m.length == 1) m = '0'+m;
+		if (d.length == 1) d = '0'+d;
+		dt1 = y+m+d;
+		mtch = b[0].match(sorttable.DATE_RE);
+		y = mtch[3]; m = mtch[2]; d = mtch[1];
+		if (m.length == 1) m = '0'+m;
+		if (d.length == 1) d = '0'+d;
+		dt2 = y+m+d;
+		if (dt1==dt2) return 0;
+		if (dt1<dt2) return -1;
+		return 1;
+	  },
+	  sort_mmdd: function(a,b) {
+		mtch = a[0].match(sorttable.DATE_RE);
+		y = mtch[3]; d = mtch[2]; m = mtch[1];
+		if (m.length == 1) m = '0'+m;
+		if (d.length == 1) d = '0'+d;
+		dt1 = y+m+d;
+		mtch = b[0].match(sorttable.DATE_RE);
+		y = mtch[3]; d = mtch[2]; m = mtch[1];
+		if (m.length == 1) m = '0'+m;
+		if (d.length == 1) d = '0'+d;
+		dt2 = y+m+d;
+		if (dt1==dt2) return 0;
+		if (dt1<dt2) return -1;
+		return 1;
+	  },
+	  shaker_sort: function(list, comp_func) {
+		var b = 0;
+		var t = list.length - 1;
+		var swap = true;
+		while(swap) {
+			swap = false;
+			for(var i = b; i < t; ++i) {
+				if ( comp_func(list[i], list[i+1]) > 0 ) {
+					var q = list[i]; list[i] = list[i+1]; list[i+1] = q;
+					swap = true;
+				}
+			}
+			t--;
+			if (!swap) break;
+			for(var i = t; i > b; --i) {
+				if ( comp_func(list[i], list[i-1]) < 0 ) {
+					var q = list[i]; list[i] = list[i-1]; list[i-1] = q;
+					swap = true;
+				}
+			}
+			b++;
+		}
+	  }
+	}
+	if (document.addEventListener) {
+		document.addEventListener("DOMContentLoaded", sorttable.init, false);
+	}
+	if (/WebKit/i.test(navigator.userAgent)) {
+		var _timer = setInterval(function() {
+			if (/loaded|complete/.test(document.readyState)) {
+				sorttable.init();
+			}
+		}, 10);
+	}
+	window.onload = sorttable.init;
+	function dean_addEvent(element, type, handler) {
+		if (element.addEventListener) {
+			element.addEventListener(type, handler, false);
+		} else {
+			if (!handler.$$guid) handler.$$guid = dean_addEvent.guid++;
+			if (!element.events) element.events = {};
+			var handlers = element.events[type];
+			if (!handlers) {
+				handlers = element.events[type] = {};
+				if (element["on" + type]) {
+					handlers[0] = element["on" + type];
+				}
+			}
+			handlers[handler.$$guid] = handler;
+			element["on" + type] = handleEvent;
+		}
+	};
+	dean_addEvent.guid = 1;
+	function removeEvent(element, type, handler) {
+		if (element.removeEventListener) {
+			element.removeEventListener(type, handler, false);
+		} else {
+			if (element.events && element.events[type]) {
+				delete element.events[type][handler.$$guid];
+			}
+		}
+	};
+	function handleEvent(event) {
+		var returnValue = true;
+		event = event || fixEvent(((this.ownerDocument || this.document || this).parentWindow || window).event);
+		var handlers = this.events[event.type];
+		for (var i in handlers) {
+			this.$$handleEvent = handlers[i];
+			if (this.$$handleEvent(event) === false) {
+				returnValue = false;
+			}
+		}
+		return returnValue;
+	};
+	function fixEvent(event) {
+		event.preventDefault = fixEvent.preventDefault;
+		event.stopPropagation = fixEvent.stopPropagation;
+		return event;
+	};
+	fixEvent.preventDefault = function() {
+		this.returnValue = false;
+	};
+	fixEvent.stopPropagation = function() {
+	  this.cancelBubble = true;
+	}
+	if (!Array.forEach) {
+		Array.forEach = function(array, block, context) {
+			for (var i = 0; i < array.length; i++) {
+				block.call(context, array[i], i, array);
+			}
+		};
+	}
+	Function.prototype.forEach = function(object, block, context) {
+		for (var key in object) {
+			if (typeof this.prototype[key] == "undefined") {
+				block.call(context, object[key], key, object);
+			}
+		}
+	};
+	String.forEach = function(string, block, context) {
+		Array.forEach(string.split(""), function(chr, index) {
+			block.call(context, chr, index, string);
+		});
+	};
+	var forEach = function(object, block, context) {
+		if (object) {
+			var resolve = Object;
+			if (object instanceof Function) {
+				resolve = Function;
+			} else if (object.forEach instanceof Function) {
+				object.forEach(block, context);
+				return;
+			} else if (typeof object == "string") {
+				resolve = String;
+			} else if (typeof object.length == "number") {
+				resolve = Array;
+			}
+			resolve.forEach(object, block, context);
+		}
+	};
+
+	// ============================================================================================================================
+	// The Bar graph is drawn using HTML5 Canvas - no externally library is needed as long as the browser supports it
+	// ============================================================================================================================
+	function BarGraph(ctx) {
+		var that = this;
+		var startArr;
+		var endArr;
+		var looping = false;
+
+		var loop = function () {
+			var delta;
+			var animationComplete = true;
+			looping = true;
+
+			for (var i = 0; i < endArr.length; i += 1) {
+				delta = (endArr[i] - startArr[i]) / that.animationSteps;
+				that.curArr[i] += delta;
+				if (delta) {
+				  animationComplete = false;
+				}
+			}
+			if (animationComplete) {
+				looping = false;
+			} else {
+				draw(that.curArr);
+				setTimeout(loop, that.animationInterval / that.animationSteps);
+			}
+		};
+
+		var draw = function (arr) {
+
+		  var numOfBars = arr.length;
+		  var barWidth;
+		  var barHeight;
+		  var border = 0;
+		  var ratio;
+		  var maxBarHeight;
+		  var gradient;
+		  var largestValue;
+		  var graphAreaX = 0;
+		  var graphAreaY = 0;
+		  var graphAreaWidth = that.width;
+		  var graphAreaHeight = that.height;
+		  var i;
+
+		  if (ctx.canvas.width !== that.width || ctx.canvas.height !== that.height) {
+			ctx.canvas.width = that.width;
+			ctx.canvas.height = that.height;
+		  }
+
+		  ctx.fillStyle = that.backgroundColor;
+		  ctx.fillRect(0, 0, that.width, that.height);
+
+		  if (that.xAxisLabelArr.length) {
+			graphAreaHeight -= 40;
+		  }
+
+		  barWidth = graphAreaWidth / numOfBars - that.margin * 2;
+		  maxBarHeight = graphAreaHeight - 25;
+
+		  var largestValue = 0;
+		  for (i = 0; i < arr.length; i += 1) {
+			if (arr[i] > largestValue) {
+			  largestValue = arr[i];
+			}
+		  }
+		  for (i = 0; i < arr.length; i += 1) {
+			if (that.maxValue) {
+			  ratio = arr[i] / that.maxValue;
+			} else {
+			  ratio = arr[i] / largestValue;
+			}
+
+			barHeight = ratio * maxBarHeight;
+			ctx.shadowOffsetX = 2;
+			ctx.shadowOffsetY = 2;
+			ctx.shadowBlur = 2;
+			ctx.shadowColor = "#999";
+
+			ctx.fillStyle = "#333";
+			ctx.fillRect(that.margin + i * that.width / numOfBars,
+			  graphAreaHeight - barHeight,
+			  barWidth,
+			  barHeight);
+
+			ctx.shadowOffsetX = 0;
+			ctx.shadowOffsetY = 0;
+			ctx.shadowBlur = 0;
+			if (barHeight > border * 2) {
+				gradient = ctx.createLinearGradient(0, 0, 0, graphAreaHeight);
+				gradient.addColorStop(1-ratio, that.colors[i % that.colors.length]);
+				// gradient.addColorStop(1, "#ffffff");
+				ctx.fillStyle = gradient;
+				ctx.fillRect(that.margin + i * that.width / numOfBars + border,
+				  graphAreaHeight - barHeight + border,
+				  barWidth - border * 2,
+				  barHeight - border * 2);
+			}
+			ctx.fillStyle = "#999";
+			ctx.font = "bold 12px arial";
+			ctx.textAlign = "center";
+			try {
+			  ctx.fillText(parseInt(arr[i],10),
+				i * that.width / numOfBars + (that.width / numOfBars) / 2,
+				graphAreaHeight - barHeight - 10);
+			} catch (ex) {}
+			if (that.xAxisLabelArr[i]) {
+			  ctx.fillStyle = "#999";
+			  ctx.font = "bold 12px arial";
+			  ctx.textAlign = "center";
+			  try{
+				ctx.fillText(that.xAxisLabelArr[i],
+				  i * that.width / numOfBars + (that.width / numOfBars) / 2,
+				  that.height - 20);
+				} catch (ex) {}
+			  }
+			}
+		  };
+	  // this.width = 250;
+	  this.width = 800;
+	  this.height = 200;
+	  this.maxValue;
+	  this.margin = 5;
+	  this.colors = ["purple", "red", "green", "yellow"];
+	  this.curArr = [];
+	  this.backgroundColor = "#fff";
+	  this.xAxisLabelArr = [];
+	  this.xAxisLabelArr2 = [];
+	  this.yAxisLabelArr = [];
+	  this.animationInterval = 100;
+	  this.animationSteps = 10;
+		this.update = function (newArr) {
+		  if (that.curArr.length !== newArr.length) {
+			that.curArr = newArr;
+			draw(newArr);
+		  } else {
+			startArr = that.curArr;
+			endArr = newArr;
+			if (!looping) {
+			  loop();
+			}
+		  }
+		};
+	}
+
+</script>
+
+
+<body>
+    <div style="height:30px;"></div>
+
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+
+        <tr>
+            <td colspan=3>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td align="center">
+                <img src="https://leewei.com/SentinelOne/images/SentinelOne_Logo.png" width="150px" align="left" alt=" ">
+            </td>
+            <td colspan=2>
+                <table class="TableTitle">
+                    <tr>
+                        <td>
+                            <h1>SentinelOne Management Server Report</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h2>for server <span class="S1Purple">$Server$</span></h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class="split-para" style="font-size:14px; color:#bbb; padding-top:10px;">Report period <font color="#566573">$ReportPeriod$</font> &#9679; Start <font color="#566573">$StartDate$</font> &#9679; End <font color="#566573">$EndDate$</font><span>&nbsp;</span></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan=3><hr /></td>
+        </tr>
+
+
+
+
+
+        <!-- Executive Overview -->
+        <tr>
+            <td>
+                <table class="TableIcon">
+                    <tr>
+                        <td>
+                            <span class="MediumText S1Purple">Executive</span><br />
+                            <span class="MediumText">Summary</span>
+                        </td>
+                        <td style="padding-left:15px;">
+                            <img src="https://leewei.com/SentinelOne/images/icon_overview.png" align="left" alt=" ">
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+            <!--
+            <td>
+                <span class="MediumText S1Purple">Executive</span><br /><span class="MediumText">Overview</span>
+                <br /><img src="https://leewei.com/SentinelOne/images/icon_overview.png" align="left" alt=" ">
+
+            </td>
+                -->
+            <td>
+                <p>SentinelOne unifies endpoint threat prevention, detection and response in a single platform driven by sophisticated machine learning and intelligent automation. The true value of the SentinelOne endpoint security system is the single point provision of the entire security triangle in a single endpoint agent that works autonomously while reporting to a single holistic management interface that provides access to all security functions.</p>
+
+                <p>The security triangle consists of:</p>
+
+                <p><b>PRE-EXECUTION: </b>Using signature based technologies and our own deep file inspection static analysis, we prevent known-bad software (malware) from being executed.</p>
+
+                <p><b>ON EXECUTION: </b>For those malware samples that bypass the prevention modules, and are able to achieve execution, we provide modules that detect unknown malware at the point of execution through the application of behavioral analysis.</p>
+
+                <p><b>POST-EXECUTION: </b>Having detected unknown malware through its behaviors, we apply automated policy-based responses including mitigation (kill, quarantine, network quarantine) and provide remediation features.  These, in conjunction with our real-time forensic analysis information, provide end-point security teams with all the information they need to restore end-points (servers, desktops and laptops) back to a known good working state.</p>
+
+                <p>This summary report provides some key performance indicators and metrics from the SentinelOne server.</p>
+
+                <div id="activethreat1" style="display: none;"><p><span class="S1Red">Note: </span>Please note that there is currently <span class="S1Red">$AUT$</span> active threat that has not been analyzed and resolved.</p></div>
+
+                <div id="activethreatx" style="display: none;"><p><span class="S1Red">Note: </span>Please note that there are currently <span class="S1Red">$AUT$</span> active threats that have not been analyzed and resolved.</p></div>
+
+                <div id="activethreat0" style="display: none;"><p><span class="S1Green">Note: </span>There are currently no active threats that have not been analyzed and resolved.</p></div>
+
+                <div id="unresolvedthreatonly" style="display: none;"><p><span class="S1Red">Note: </span>This report only includes unresolved threats.</p></div>
+
+            </td>
+            <td>
+                <table class="TableKPI">
+                    <tr><td><span class="LargeText">$TT$</span><br /><span class="S1Purple SpacePadding">Total Threats</span></td></tr>
+                    <tr><td><span class="LargeText">$AT$</span><br /><span class="S1Purple SpacePadding">Active Threats</span></td></tr>
+                    <tr><td><span id="activethreatheader" class="S1Red LargeText">$AUT$</span><br /><span class="S1Purple SpacePadding">Active and Unresolved Threats</span></td></tr>
+                    <tr><td><span class="LargeText">$AI$</span><br /><span class="S1Purple SpacePadding">Agents Installed</span></td></tr>
+                    <tr><td><span class="LargeText">$PA$</span><br /><span class="S1Purple SpacePadding">Active Agents</span></td></tr>
+                    <tr><td><span class="MediumText">$MG$</span><br /><span class="S1Purple SpacePadding">Most At-Risk Group</span></td></tr>
+                    <tr><td><span class="MediumText">$MU$</span><br /><span class="S1Purple SpacePadding">Most At-Risk User</span></td></tr>
+                    <tr><td><span class="MediumText">$ME$</span><br /><span class="S1Purple SpacePadding">Most At-Risk Endpoint</span></td></tr>
+                </table>
+
+                <script type="text/javascript">
+                    var aut = $AUT$;
+                    if (aut == 0) {
+                        document.getElementById('activethreat0').style.display = 'block';
+                        document.getElementById('activethreatheader').className = 'S1Green LargeText';
+                    }
+                    else if (aut == 1) {
+                        document.getElementById('activethreat1').style.display = 'block';
+                        document.getElementById('activethreatheader').className = 'S1Red LargeText';
+                    }
+                    else if (aut > 1) {
+                        document.getElementById('activethreatx').style.display = 'block';
+                        document.getElementById('activethreatheader').className = 'S1Red LargeText';
+                    }
+
+                    var unresolved = $UnresolvedThreatOnly$
+                    if (unresolved == true) {
+                        document.getElementById('unresolvedthreatonly').style.display = 'block';
+                    }
+                </script>
+
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+
+        <!-- Threat Overview -->
+        <tr>
+            <td colspan=3><hr /></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="TableIcon">
+                    <tr>
+                        <td>
+                            <span class="MediumText S1Purple">Threat</span><br />
+                            <span class="MediumText">Summary</span>
+                        </td>
+                        <td style="padding-left:15px;">
+                            <img src="https://leewei.com/SentinelOne/images/icon_detection.png" align="left" alt=" ">
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+            <!--
+            <td><span class="MediumText S1Purple">Threat</span><br /><span class="MediumText">Summary</span>
+                <br /><img src="https://leewei.com/SentinelOne/images/icon_detection.png" align="left" alt=" ">
+            </td>
+            -->
+            <td colspan=2><span class="LargeText">Detected Threats</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>These are the detected threats and their statuses. They include both resolved and unresolved threats.</p>
+
+                <p><span class="S1Active">ACTIVE:</span> These are threats that do not have a mitigation policy, or only have a "Kill" mitigation policy. These threats should be analyzed and further actions should be taken, such as Kill, Quarantine, or Rollback. Once an Action has been taken, acknowledge the notification to clear it out of the SentinelOne dashboard.</p>
+
+                <p><span class="S1Mitigated">MITIGATED:</span> These threats have been quarantined, remediated, or rolled back. Acknowledge the alert notification to clear them out in the SentinelOne dashboard.</p>
+
+                <p><span class="S1Blocked">BLOCKED:</span> These threats have been prevented from executing based on blacklisted hash or static analysis (signature-less analysis). Acknowledge the alert notification to clear them out in the SentinelOne dashboard.</p>
+
+                <p><span class="S1Suspicious">SUSPICIOUS:</span> These are threats with suspicious behavior that should be analyzed further. If it is a false-positive, it should be marked as "benigh" and whitelisted. They can also be marked as a threat and further actions can be taken. Additional actions include Kill, Quarantine, and Rollback.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-THREATDATA$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="ThreatDataBarGraph"></div></td>
+        </tr>
+    </table>
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Detection Engines</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>SentinelOne uses different engines and techniques within the same agent to protect against malicious threats. This is a report of the different engines having convicted and detected the malicious activites.</p>
+
+                <p>
+                    <b>Pre-Execution (Blacklist): </b>As a first line of defense, the SentinelOne agents receive blacklisted signatures automatically
+                    from the server to protect against known threats. The immunization is automated to ensure protection against already discovered threats within the deployment environment.
+                </p>
+
+                <p>
+                    <b>Pre-Execution (DFI): </b>The SentinelOne Deep File Inspection (DFI) is an intelligent, signature-less static prevention engine that is used to uncover and block known and unknown file-based malware.
+                    It leverages advanced machine learning algorithms instead of signatures. A key feature of DFI is the ability to provide protection even when the endpoint is offline without network connectivity.
+                </p>
+
+                <p>
+                    <b>Pre-Execution (Cloud Reputation): </b>While the SentinelOne agent is capable of using DFI to protect against file-based malware, it is further enhanced
+                    with the capability of using aggregated Cloud intelligence to validate suspicions as needed or when appropriate.
+                </p>
+
+                <p>
+                    <b>On-Execution (DBT): </b>This is the SentinelOne flagship Dynamic Behavioral Tracking (DBT) engine. Advanced threats are protected through cutting-edge behavior-based detection.
+                    DBT detects any type of malicious activity - from polymorphic malware to sophisticated exploits to stealthy insider attacks - against a full context of normal system activity.
+                </p>
+
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-DETECTIONENGINE$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="DetectionEngineBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Most Harmful Files</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>
+                    These are the top 10 files that have generated threat alerts. The files are either blocked, mitigated, remediated, rollback, or simply alerted for further actions.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-INFECTEDFILES$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="InfectedFilesBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Most At Risk Computer Groups</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>
+                    These are the top 10 computer groups with the highest incident counts, or number of detected threats.
+                    The report does not take into account threat severity and nature. Nonetheless, it is a good indication of groups that should be monitored closely.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-MOSTATRISKGROUPS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="MostAtRiskGroupsBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Most At Risk Users</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>
+                    These are the top 10 users with the highest incident counts, or number of detected threats.
+                    The report does not take into account threat severity and nature. Nonetheless, it is a good indication of users that should be monitored closely.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-MOSTATRISKUSERS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="MostAtRiskUsersBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Most At Risk Endpoints</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>These are the top 10 endpoints with the highest incident counts, or number of detected threats. 
+                The report does not take into account threat severity and nature. Nonetheless, it is a good indication of endpoints that should be monitored closely.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-MOSTATRISKENDPOINTS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="MostAtRiskEndpointsBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+
+
+        <!-- Endpoint Overview -->
+        <tr>
+            <td colspan=3><hr /></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="TableIcon">
+                    <tr>
+                        <td>
+                            <span class="MediumText S1Purple">Endpoint</span><br />
+                            <span class="MediumText">Summary</span>
+                        </td>
+                        <td style="padding-left:15px;">
+                            <img src="https://leewei.com/SentinelOne/images/icon_endpoint.png" align="left" alt=" ">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan=2><span class="LargeText">Endpoints Currently Active</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>This is a report of all the agents that are currently active and online. These agents have communicated with the SentinelOne server, or have sent a keepalive signal in the last few minutes.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-NETWORKSTATUS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="NetworkStatusBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+
+
+
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Endpoint Operating Systems</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>
+                    SentinelOne supports a wide range of heterogeneous operating systems including Windows, macOS, and Linux.
+                    The following operating systems and variants have been found on this server.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-ENDPOINTOS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="EndpointOSBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+
+
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td></td>
+            <td colspan=2><hr /></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><span class="LargeText">Endpoint Agent Versions</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>The SentinelOne server is designed to support agents with earlier versions.</p>
+                <p>However, SentinelOne recommends that the agents be upgraded to the latest version to ensure bug fixes and also to take advantage of new features and protection techniques.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-ENDPOINTVERSION$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="EndpointVersionBarGraph"></div></td>
+        </tr>
+    </table>
+
+
+
+    <!-- Application Overview -->
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+
+
+        <tr>
+            <td colspan=3><hr /></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="TableIcon">
+                    <tr>
+                        <td>
+                            <span class="MediumText S1Purple">Application</span><br />
+                            <span class="MediumText">Summary</span>
+                        </td>
+                        <td style="padding-left:15px;">
+                            <img src="https://leewei.com/SentinelOne/images/icon_application.png" align="left" alt=" ">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan=2><span class="LargeText">Top 10 Applications</span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>
+                <p>The SentinelOne agent collects installed application inventory from all the endpoints, including for Windows. macOS, and Linux computers.
+                This is a chart of the top 10 most common applications found.</p>
+                <p><span class="S1Active">Note: </span>For Windows endpoints, some Microsoft security updates entries have been filtered out in this report to 
+                provide a better view and representation of the non-OS patch related applications.</p>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2>$TABLE-TOPAPPLICATIONS$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan=2><div class="DivChart" id="TopApplicationsBarGraph"></div></td>
+        </tr>
+
+    </table>
+
+
+    <!-- Report Footer -->
+    <div style="page-break-before: always"></div>
+    <table class="TableMain">
+        <thead>
+            <tr>
+                <th class="col1"></th>
+                <th class="col2"></th>
+                <th class="col3"></th>
+            </tr>
+        </thead>
+        <tr>
+            <td colspan=3><hr /></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="TableIcon">
+                    <tr>
+                        <td>
+                            <span class="MediumText S1Purple">End</span><br />
+                            <span class="MediumText">Report</span>
+                        </td>
+                        <td style="padding-left:15px;">
+                            <img src="https://leewei.com/SentinelOne/images/icon_end.png" align="left" alt=" ">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan=2>
+                <p class="split-para" style="font-size:14px; color:#bbb; padding-top:10px;">Report generated on <font color="#566573">$ReportTimestamp$</font></p>
+                <p class="split-para" style="font-size:14px; color:#bbb; padding-top:10px;">Generated by <font color="#566573">$ReportUser$</font></p>
+            </td>
+        </tr>
+    </table>
+
+
+    <div style="height:200px;"></div>
+</body>
+
+
+<!-- JS
+================================================== -->
+<script type="text/javascript">
+		document.getElementById("ThreatDataBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("ThreatDataBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#472c6e", "#50327c", "#59388a", "#623d98", "#6b43a6", "#7449b4", "#7e55bb", "#8963c0", "#9471c6", "#9e7fcc"];
+			graph.xAxisLabelArr = [$ThreatDataLabel$];
+			setInterval(function () {graph.update([$ThreatDataValue$]);}, 10);
+		}());
+
+		document.getElementById("DetectionEngineBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("DetectionEngineBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#0000b3", "#0000cc", "#0000e6", "#0000ff", "#1a1aff", "#3333ff", "#4d4dff", "#6262ff", "#7676ff", "#8989ff"];
+			graph.xAxisLabelArr = [$DetectionEnginesLabel$];
+			setInterval(function () {graph.update([$DetectionEnginesValue$]);}, 10);
+		}());
+
+		document.getElementById("InfectedFilesBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("InfectedFilesBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#3b5f3b", "#426b42", "#4a774a", "#528352", "#598f59", "#619b61", "#6ca36c", "#78ab78", "#84b384", "#90ba90"];
+			graph.xAxisLabelArr = [$InfectedFilesLabel$];
+			setInterval(function () {graph.update([$InfectedFilesValue$]);}, 10);
+		}());
+
+		document.getElementById("MostAtRiskGroupsBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("MostAtRiskGroupsBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#946100", "#a76d00", "#bb7a00", "#ce8700", "#e29400", "#f6a100", "#ffab0a", "#ffb11e", "#ffb831", "#ffbf45"];
+			graph.xAxisLabelArr = [$MostAtRiskGroupsLabel$];
+			setInterval(function () {graph.update([$MostAtRiskGroupsValue$]);}, 10);
+		}());
+
+		document.getElementById("MostAtRiskUsersBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("MostAtRiskUsersBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#633663", "#703d70", "#7d447d", "#894b89", "#965296", "#a359a3", "#ab64ab", "#b271b2", "#b97eb9", "#c08ac0"];
+			graph.xAxisLabelArr = [$MostAtRiskUsersLabel$];
+			setInterval(function () {graph.update([$MostAtRiskUsersValue$]);}, 10);
+		}());
+
+		document.getElementById("MostAtRiskEndpointsBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("MostAtRiskEndpointsBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#633636", "#703d3d", "#7d4444", "#894b4b", "#965252", "#a35959", "#ab6464", "#b27171", "#b97e7e", "#c08a8a"];
+			graph.xAxisLabelArr = [$MostAtRiskEndpointsLabel$];
+			setInterval(function () {graph.update([$MostAtRiskEndpointsValue$]);}, 10);
+		}());
+
+
+		document.getElementById("NetworkStatusBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("NetworkStatusBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#3b5f3b", "#426b42", "#4a774a", "#528352", "#598f59", "#619b61", "#6ca36c", "#78ab78", "#84b384", "#90ba90"];
+			graph.xAxisLabelArr = [$NetworkStatusLabel$];
+			setInterval(function () {graph.update([$NetworkStatusValue$]);}, 10);
+		}());
+
+
+		document.getElementById("EndpointOSBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("EndpointOSBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#633663", "#703d70", "#7d447d", "#894b89", "#965296", "#a359a3", "#ab64ab", "#b271b2", "#b97eb9", "#c08ac0"];
+			graph.xAxisLabelArr = [$EndpointOSLabel$];
+			setInterval(function () {graph.update([$EndpointOSValue$]);}, 10);
+		}());
+
+
+		document.getElementById("EndpointVersionBarGraph").align = "left";
+		(function () {
+			function createCanvas(divName) {
+
+				var div = document.getElementById(divName);
+				var canvas = document.createElement('canvas');
+				div.appendChild(canvas);
+				if (typeof G_vmlCanvasManager != 'undefined') {
+					canvas = G_vmlCanvasManager.initElement(canvas);
+				}
+				var ctx = canvas.getContext("2d");
+				return ctx;
+			}
+
+			var ctx = createCanvas("EndpointVersionBarGraph");
+
+			var graph = new BarGraph(ctx);
+			graph.margin = 10;
+			graph.colors = ["#633636", "#703d3d", "#7d4444", "#894b4b", "#965252", "#a35959", "#ab6464", "#b27171", "#b97e7e", "#c08a8a"];
+			graph.xAxisLabelArr = [$EndpointVersionLabel$];
+			setInterval(function () {graph.update([$EndpointVersionValue$]);}, 10);
+		}());
+
+		document.getElementById("TopApplicationsBarGraph").align = "left";
+		(function () {
+		    function createCanvas(divName) {
+
+		        var div = document.getElementById(divName);
+		        var canvas = document.createElement('canvas');
+		        div.appendChild(canvas);
+		        if (typeof G_vmlCanvasManager != 'undefined') {
+		            canvas = G_vmlCanvasManager.initElement(canvas);
+		        }
+		        var ctx = canvas.getContext("2d");
+		        return ctx;
+		    }
+
+		    var ctx = createCanvas("TopApplicationsBarGraph");
+
+		    var graph = new BarGraph(ctx);
+		    graph.margin = 10;
+		    graph.colors = ["#472c6e", "#50327c", "#59388a", "#623d98", "#6b43a6", "#7449b4", "#7e55bb", "#8963c0", "#9471c6", "#9e7fcc"];
+		    graph.xAxisLabelArr = [$TopApplicationsLabel$];
+		    setInterval(function () { graph.update([$TopApplicationsValue$]); }, 10);
+		}());
+
+</script>
+
+
+
+</html>

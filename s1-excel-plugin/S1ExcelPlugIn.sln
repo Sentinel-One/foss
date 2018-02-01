@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentinelOne Excel PlugIn", "S1ExcelPlugIn\SentinelOne Excel PlugIn.csproj", "{E784AB15-4702-4CF2-BB9D-24B520171BC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owf.Controls.A1Panel", "..\Cool_Gradient_Panel\Owf.Controls.A1Panel\Owf.Controls.A1Panel.csproj", "{0CCB7147-6EEC-4CC6-923B-99632A556F17}"
+EndProject
+Project("{911E67C6-3D85-4FCE-B560-20A9C3E3FF48}") = "EXCEL", "..\..\..\..\..\..\Program Files (x86)\Microsoft Office\Office14\EXCEL.EXE", "{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}"
+	ProjectSection(DebuggerProjectSystem) = preProject
+		PortSupplier = 00000000-0000-0000-0000-000000000000
+		Executable = C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE
+		RemoteMachine = TRADERS
+		StartingDirectory = C:\Program Files (x86)\Microsoft Office\Office16
+		Environment = Default
+		LaunchingEngine = 5fff7536-0c87-462d-8fd2-7971d948e6dc
+		UseLegacyDebugEngines = No
+		LaunchSQLEngine = No
+		AttachLaunchAction = No
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SentinelOne_Excel_PlugIn_Setup", "SentinelOne_Excel_PlugIn_Setup\S1ExcelPlugInSetup.vdproj", "{58E7429E-1856-4101-95B3-EEF89C16CB3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E784AB15-4702-4CF2-BB9D-24B520171BC4}.Release|x86.ActiveCfg = Release|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0CCB7147-6EEC-4CC6-923B-99632A556F17}.Release|x86.ActiveCfg = Release|Any CPU
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Debug|Any CPU.ActiveCfg = Release|x86
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Debug|Mixed Platforms.ActiveCfg = Release|x86
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Debug|x86.ActiveCfg = Release|x86
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Release|Any CPU.ActiveCfg = Release|x86
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4B1C3C8E-E526-4E3E-AE88-2176C3F0A027}.Release|x86.ActiveCfg = Release|x86
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|Any CPU.ActiveCfg = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|Any CPU.Build.0 = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|Mixed Platforms.Build.0 = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|x86.ActiveCfg = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Debug|x86.Build.0 = Debug
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|Any CPU.ActiveCfg = Release
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|Any CPU.Build.0 = Release
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|Mixed Platforms.ActiveCfg = Release
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|Mixed Platforms.Build.0 = Release
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|x86.ActiveCfg = Release
+		{58E7429E-1856-4101-95B3-EEF89C16CB3B}.Release|x86.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

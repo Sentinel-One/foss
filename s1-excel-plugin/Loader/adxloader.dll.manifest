@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <assemblyIdentity name="IEM Excel Connector, PublicKeyToken=bef2983f1300af93" />
+  <loaderSettings generateLogFile="true" shadowCopyEnabled="true" privileges="user" configFileName="app.config" />
+</configuration>

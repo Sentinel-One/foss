@@ -1,0 +1,35 @@
+﻿Changes in version 2.0.0.0
+- (2017-09-21)	Too many features to remember
+	- Ability to log in using token, in addition to username/password
+	- Add extracting Application data
+	- Add extracting Passphrases
+	- Add delayed loading agent reference data when starting up Excel
+	- Add executive summary report (HTML and PDF)
+	- Add emailing the reports
+	- Add limit/skip to batch data retrieving as not to overwhelm the servers
+
+Changes in version 1.6.1.0
+- (2017-08-10) Some date fields might be null, causing errors
+
+Changes in version 1.6.0.0
+- (2017-08-02) Fixed date time not formatting correctly outside of U.S. format
+
+Changes in version 1.5.0.0
+- (2017-07-24) Fixed failure with password containing special characters
+
+Changes in version 1.4.0.0
+- (2017-07-18) Fixed Show API Details button bringing up the wrong windows
+- (2017-07-18) Improved date range selector to add 1 day to end date
+- (2017-07-18) Combined decoding DBT categories of SVM and Logic to just DBT
+
+Changes in version 1.3.0.0
+- (2017-07-12) Fixed problem with Lookup Table sheet not being created properly
+
+Changes in version 1.2.0.0
+- (2017-07-07) Added support for 2-factor authentication login
+- (2017-07-07) Fixed error when printing PDF from an empty sheet
+- (2017-07-07) Added Show API details windows to display JSON results
+- (2017-07-07) Added clearing and deleting old sheet data when changing credentials
+- (2017-07-07) Fixed problem with pivot table overrunning. HRESULTS error returned.
+
+
