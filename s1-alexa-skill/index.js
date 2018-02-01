@@ -8,7 +8,7 @@ var server = '';
 var host = '';
 var apiKey = '';
 
-// Main event router 
+// Main event router
 exports.handler = function (event, context) {
     try {
         console.log("event.session.application.applicationId=" + event.session.application.applicationId);
@@ -24,7 +24,7 @@ exports.handler = function (event, context) {
             console.log('No access token, need to link');
             onLink(event.request, event.session,
                 function callback(sessionAttributes, speechletResponse) {
-                    context.succeed(buildResponse(sessionAttributes, speechletResponse)); }); 
+                    context.succeed(buildResponse(sessionAttributes, speechletResponse)); });
         } else if (event.request.type === "LaunchRequest") {
             onLaunch(event.request, event.session,
                 function callback(sessionAttributes, speechletResponse) {
@@ -88,9 +88,9 @@ function onIntent(intentRequest, session, callback) {
     else if (intentName === 'ServerInfo')
         handleServerInfoRequest(intent, session, callback);
     else if (intentName === "AMAZON.HelpIntent")
-       getHelpResponse(callback); 
+       getHelpResponse(callback);
     else if (intentName === "AMAZON.StopIntent" || intentName === "AMAZON.CancelIntent")
-       handleSessionEndRequest(callback);     
+       handleSessionEndRequest(callback);
     else {
         throw "Invalid intent";
     }
@@ -104,55 +104,55 @@ function onSessionEnded(sessionEndedRequest, session) {
     console.log("onSessionEnded requestId=" + sessionEndedRequest.requestId + ", sessionId=" + session.sessionId);
 }
 
-function getHelpResponse(callback) { 
-    var sessionAttributes = {}; 
-    var cardTitle = "SentinelOne"; 
+function getHelpResponse(callback) {
+    var sessionAttributes = {};
+    var cardTitle = "SentinelOne";
     var speechOutput = "Try saying Summary Report or Daily Report";
     var repromptText = "Just say Summary Report or Daily Report";
-    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, false)); 
-} 
+    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, false));
+}
 
-function getWelcomeResponse(callback) { 
-    var sessionAttributes = {}; 
-    var cardTitle = "SentinelOne"; 
+function getWelcomeResponse(callback) {
+    var sessionAttributes = {};
+    var cardTitle = "SentinelOne";
     var speechOutput = "Welcome! You can ask SentinelOne to say Summary Report or Daily Report";
     var repromptText = "Try saying Summary Report or Daily Report";
-    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, false)); 
-} 
+    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, repromptText, false));
+}
 
-function getLinkResponse(callback) { 
-    var sessionAttributes = {}; 
-    var cardTitle = "SentinelOne"; 
+function getLinkResponse(callback) {
+    var sessionAttributes = {};
+    var cardTitle = "SentinelOne";
     var speechOutput = "Please link this account to your SentinelOne server";
-    callback(sessionAttributes, buildSpeechletResponseToLink(cardTitle, speechOutput, null, true)); 
-} 
+    callback(sessionAttributes, buildSpeechletResponseToLink(cardTitle, speechOutput, null, true));
+}
 
-function handleSessionEndRequest(callback) { 
-    var sessionAttributes = {}; 
-    var cardTitle = "Session Ended"; 
-    var speechOutput = "Thank you for using the SentinelOne skill"; 
-    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, null, true)); 
-} 
+function handleSessionEndRequest(callback) {
+    var sessionAttributes = {};
+    var cardTitle = "Session Ended";
+    var speechOutput = "Thank you for using the SentinelOne skill";
+    callback(sessionAttributes, buildSpeechletResponse(cardTitle, speechOutput, null, true));
+}
 
 // Summary Report --------------------------------------------------------------
 
-function urlThreatSummary() { 
+function urlThreatSummary() {
         return {
             url: host + '/web/api/v1.6/threats/summary',
             headers: {
                 'Authorization' : apiKey,
                 'Content-Type' : 'application/json'
-            } 
+            }
         };
 }
 
-function urlEndpointSummary() { 
+function urlEndpointSummary() {
         return {
             url: host + '/web/api/v1.6/agents/count-by-filters?participating_fields=hardware_information__machine_type,is_up_to_date,software_information__os_type,infected',
             headers: {
                 'Authorization' : apiKey,
                 'Content-Type' : 'application/json'
-            } 
+            }
         };
 }
 
@@ -162,12 +162,12 @@ function getSummaryJSON(callback) {
     var textThreat = '';
     var textEndpoint = '';
     var waiting = 2;
-    
+
     request.get(urlThreatSummary(), function(error, response, body) {
                 console.log('After Summary');
 
         var d = JSON.parse(body);
-        
+
         textThreat += "<p>Let's start with the threat status</p>";
         var active = d['active'];
         if (active === undefined) {
@@ -208,14 +208,14 @@ function getSummaryJSON(callback) {
         } else {
             textThreat += '<p>In addition</p><p>' + suspicious + ' suspicious activities were detected</p><p>they should be investigated</p>';
         }
-        
+
         textThreat += '<break time="1500ms"/><p>Next up the summary of installed endpoints</p>';
         --waiting;
     });
 
     request.get(urlEndpointSummary(), function(error, response, body) {
         var d = JSON.parse(body);
-        
+
         var count = d['total_count'];
         if (count === undefined) {
             textEndpoint += '<p>Sorry there is an error</p>';
@@ -227,27 +227,27 @@ function getSummaryJSON(callback) {
         } else {
             textEndpoint += '<p>There are currently ' + count + ' endpoints installed</p>';
         }
-        
+
         var win = (d['software_information__os_type']['windows'] === undefined ? 0 : d['software_information__os_type']['windows']) + (d['software_information__os_type']['windows_legacy'] === undefined ? 0 : d['software_information__os_type']['windows_legacy']);
         var mac = (d['software_information__os_type']['osx'] === undefined ? 0 : d['software_information__os_type']['osx']);
         var linux = (d['software_information__os_type']['linux'] === undefined ? 0 : d['software_information__os_type']['linux']);
-        
+
         if (win > 0) {
             textEndpoint += '<p>' + Math.round((win/count)*100) + ' percent of the endpoints are Windows</p>';
-        } 
-        
+        }
+
         if (mac > 0) {
             textEndpoint += '<p>' + Math.round((mac/count)*100) + ' percent of the endpoints are macOS</p>';
-        } 
+        }
 
         if (linux > 0) {
             textEndpoint += '<p>' + Math.round((linux/count)*100) + ' percent of the endpoints are Linux</p>';
-        } 
+        }
 
         var uptodate = (d['is_up_to_date']['true'] === undefined ? 0 : d['is_up_to_date']['true']);
         if (uptodate > 0) {
             textEndpoint += '<p>' + Math.round((uptodate/count)*100) + ' percent of the endpoints are up to date with the latest version of the agent</p>';
-        } 
+        }
 
         var infected = (d['infected']['true'] === undefined ? 0 : d['infected']['true']);
         if (infected === 0)
@@ -256,11 +256,11 @@ function getSummaryJSON(callback) {
             textEndpoint += '<p>Lastly, ' + infected + ' endpoint is currently infected with threats, which is ' + Math.round((infected/count)*100) + ' percent of the total population</p>';
         } else if (infected > 0) {
             textEndpoint += '<p>Lastly, ' + infected + ' endpoints are currently infected with threats, which are ' + Math.round((infected/count)*100) + ' percent of the total population</p>';
-        } 
+        }
 
         --waiting;
     });
-    
+
     waitUntil()
         .interval(100)
         .times(30)
@@ -271,7 +271,7 @@ function getSummaryJSON(callback) {
             textOut += textThreat + textEndpoint + "<break time='1500ms'/><p>That's all, please have a great day!</p>" + '</speak>';
             callback(textOut);
         });
-} 
+}
 
 function handleSummaryRequest(intent, session, callback) {
     var speechOutput = "We have an error";
@@ -280,14 +280,14 @@ function handleSummaryRequest(intent, session, callback) {
             speechOutput = data;
         }
         callback(session.attributes, buildSpeechletResponseWithoutCard(speechOutput, "", "true"));
-        
+
     });
 }
 
 // Daily Report ----------------------------------------------------------------
 
-function urlDailySummary() { 
-    
+function urlDailySummary() {
+
         var today = timestamp.now().toString().replace('.','');
         var yesterday = timestamp.now('-1d').toString().replace('.','');
         return {
@@ -295,7 +295,7 @@ function urlDailySummary() {
             headers: {
                 'Authorization' : apiKey,
                 'Content-Type' : 'application/json'
-            } 
+            }
         };
 }
 
@@ -305,12 +305,12 @@ function getDailyJSON(callback) {
     var textThreat = '';
     var textEndpoint = '';
     var waiting = 1;
-    
+
     request.get(urlDailySummary(), function(error, response, body) {
         var d = JSON.parse(body);
-        
+
         textThreat += "<p>Here is the SentinelOne daily report</p>";
-        
+
         var numberThreat = d.length;
 
         if (numberThreat === 0) {
@@ -343,7 +343,7 @@ function getDailyJSON(callback) {
                     CountSuspicious++;
                 }
             }
-            
+
             /*
                 0 - Mitigated
                 1 - Active
@@ -352,7 +352,7 @@ function getDailyJSON(callback) {
                 4 - Pending
                 5 - Suspicious canceled
             */
-            
+
             if (CountActive === 0) {
                 textThreat += '<p>Good news, none of the threats are still active and all have been resolved.</p>';
             } else if (CountActive === 1)
@@ -363,7 +363,7 @@ function getDailyJSON(callback) {
                 textThreat += '<p>There are currently ' + CountActive + ' active threats that have not been resolved</p>' +
                               '<p>These are the urgent items that should be investigated immediately</p>';
             }
-            
+
             if (CountPrevented === 0) {
                 // There are no unresolved Mitigated threats, so nothing to say here
             } else if (CountPrevented === 1)
@@ -371,7 +371,7 @@ function getDailyJSON(callback) {
                 textThreat += '<p>One threat was automatically prevented</p><p>just acknowledge it in the console, and you are all set</p>';
             } else {
                 textThreat += '<p>' + CountPrevented + ' threats are automatically prevented</p><p>just acknowledge them in the console, and you are all set</p>';
-            }            
+            }
 
             if (CountSuspicious === 0) {
                 // There are no unresolved Mitigated threats, so nothing to say here
@@ -396,7 +396,7 @@ function getDailyJSON(callback) {
             textOut += textThreat + textEndpoint + "<break time='1500ms'/><p>That's all for the daily report.</p>" + '</speak>';
             callback(textOut);
         });
-} 
+}
 
 function handleDailyRequest(intent, session, callback) {
     var speechOutput = "We have an error";
@@ -410,13 +410,13 @@ function handleDailyRequest(intent, session, callback) {
 
 // Server Information ----------------------------------------------------------------
 
-function urlServerInfoSummary() { 
+function urlServerInfoSummary() {
         return {
             url: host + '/web/api/v1.6/info',
             headers: {
                 'Authorization' : apiKey,
                 'Content-Type' : 'application/json'
-            } 
+            }
         };
 }
 
@@ -425,12 +425,12 @@ function getServerInfoJSON(callback) {
     var textOut = '<speak>';
     var textInfo = '';
     var waiting = 1;
-    
+
     request.get(urlServerInfoSummary(), function(error, response, body) {
         var d = JSON.parse(body);
-        
+
         textInfo += "<p>Here is the information about your SentinelOne server</p>";
-        
+
         var version = d.version + '.' + d.build;
 
         textInfo += '<p>The name of your server is ' + server + ' which is spelt <prosody rate="x-slow"><say-as interpret-as="spell-out">' + server.substring(0, server.indexOf('.')) + '</say-as></prosody></p>';
@@ -448,7 +448,7 @@ function getServerInfoJSON(callback) {
             textOut += textInfo + "<break time='1500ms'/><p>That's all on server information!</p>" + '</speak>';
             callback(textOut);
         });
-} 
+}
 
 function handleServerInfoRequest(intent, session, callback) {
     var speechOutput = "We have an error";
@@ -463,7 +463,7 @@ function handleServerInfoRequest(intent, session, callback) {
 // ------- Helper functions to build responses -------
 
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
-    
+
     return {
         outputSpeech: {
             type: "PlainText",
@@ -485,7 +485,7 @@ function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
 }
 
 function buildSpeechletResponseToLink(title, output, repromptText, shouldEndSession) {
-    
+
     return {
         outputSpeech: {
             type: "PlainText",
