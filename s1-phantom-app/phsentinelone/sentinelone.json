@@ -1,0 +1,1408 @@
+{
+    "appid": "bb05c97e-dc37-4fbf-9366-d69c542e187a",
+    "name": "SentinelOne",
+    "description": "This app integrates with the SentinelOne platform to perform <b>prevention</b>, <b>detection</b>, <b>remediation</b>, and <b>forensics</b> endpoint management tasks.",
+    "type": "endpoint",
+    "product_vendor": "SentinelOne",
+    "logo": "sentinelone.png",
+    "product_name": "SentinelOne",
+    "product_version_regex": ".*",
+    "publisher": "SentinelOne",
+    "license": "Copyright SentinelOne 2017",
+    "app_version": "1.2.1",
+    "utctime_updated": "2017-11-21T00:37:30.930877Z",
+    "package_name": "phantom_sentinelone",
+    "main_module": "sentinelone_connector.pyc",
+    "min_phantom_version": "3.0.265",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "sentinelone_server_url": {
+            "description": "SentinelOne Server URL",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "",
+            "order": 0
+        },
+        "access_token": {
+            "description": "REST API Access Token",
+            "data_type": "string",
+            "required": true,
+            "value_list": [],
+            "default": "",
+            "order": 1
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "block hash",
+            "identifier": "block_hash",
+            "description": "Block a file hash",
+            "verbose": "",
+            "type": "contain",
+            "read_only": false,
+            "parameters": {
+                "hash": {
+                    "description": "Hash of file to blacklist",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "sha1"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "description": {
+                    "description": "Description",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "Black listed hash added through Phantom",
+                    "order": 1
+                },
+                "os_family": {
+                    "description": "OS Family",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [
+                        "windows",
+                        "osx",
+                        "linux"
+                    ],
+                    "default": "windows",
+                    "order": 2
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "sha1"
+                    ],
+                    "column_name": "hash",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.comment",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "comment",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list endpoints",
+            "identifier": "list_endpoints",
+            "description": "List all the endpoints/sensors configured on the device",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "connected"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_pending_uninstall",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.last_active_date",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-21T04:17:23.388000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.status",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.registered_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-28T22:20:12.243000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.last_logged_in_user_name",
+                    "data_type": "string",
+                    "column_name": "User",
+                    "column_order": 3,
+                    "example_values": [
+                        "Amy"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.id",
+                    "data_type": "string",
+                    "column_name": "Agent ID",
+                    "column_order": 0,
+                    "example_values": [
+                        "59f5029c75c5fa05c97b9d7a"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.uuid",
+                    "data_type": "string",
+                    "example_values": [
+                        "76f4ffb8922196b4f94c31127e1aad17995d6c05"
+                    ],
+                    "contains": [
+                        "sha1",
+                        "md5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.encrypted_applications",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.total_memory",
+                    "data_type": "numeric",
+                    "example_values": [
+                        16260
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.cpu_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        8
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.cpu_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "Intel(R) Core(TM) i7-4980HQ CPU @ 2.80GHz"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.machine_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "laptop"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.model_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Apple Inc. - MacBookPro11,5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.core_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        8
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_start_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-19T18:28:12Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_revision",
+                    "data_type": "string",
+                    "example_values": [
+                        "No ServicePack Installed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_type",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_name",
+                    "data_type": "string",
+                    "column_name": "OS",
+                    "column_order": 2,
+                    "example_values": [
+                        "Windows 10"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_arch",
+                    "data_type": "string",
+                    "example_values": [
+                        "64 bit"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_uninstalled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_active",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_decommissioned",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.meta_data.created_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-28T22:20:12.243000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.meta_data.updated_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-20T16:29:02.069000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.research_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "researchData.collectAndSend"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.auto_mitigation_actions",
+                    "data_type": "string",
+                    "example_values": [
+                        "mitigation.quarantineThreat"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.mitigation_mode_suspicious",
+                    "data_type": "string",
+                    "example_values": [
+                        "protect"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.mitigation_mode",
+                    "data_type": "string",
+                    "example_values": [
+                        "protect"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.learning_mode",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.assets.*.version",
+                    "data_type": "string",
+                    "example_values": [
+                        "6077"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.assets.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "static"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.external_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.70.71.37"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_up_to_date",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.group_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.70.71.x"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.domain",
+                    "data_type": "string",
+                    "example_values": [
+                        "WORKGROUP"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.inet6",
+                    "data_type": "string",
+                    "example_values": [
+                        "fe80::a9dd:cf56:5111:6b7e"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Ethernet"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.inet",
+                    "data_type": "string",
+                    "example_values": [
+                        "192.168.4.249"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.physical",
+                    "data_type": "string",
+                    "example_values": [
+                        "a8:20:66:40:f1:f6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.computer_name",
+                    "data_type": "string",
+                    "column_name": "Computer Name",
+                    "column_order": 1,
+                    "example_values": [
+                        "Camper"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.threat_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.group_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "59dd993275c5fa05ca34ef45"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.agent_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.0.0.6077"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.started_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-15T20:08:23.751000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.finished_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-15T20:39:15.846000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.users.*.sid",
+                    "data_type": "string",
+                    "example_values": [
+                        "S-1-5-21-185561252-1129650542-1691860323-1000"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.users.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "leewei"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.users.*.login_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-08T15:20:38.034+00:00"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list processes",
+            "identifier": "list_processes",
+            "description": "List the running processes on a machine",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP of the machine to list processes on",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "ip",
+                        "host name"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "ip",
+                        "host name"
+                    ],
+                    "column_name": "ip_hostname",
+                    "example_values": [
+                        "camper"
+                    ]
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Agent id: 59f5029c75c5fa05c97b9d7a, Ip hostname: camper"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_status",
+                    "data_type": "string",
+                    "example_values": [
+                        "connected"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_pending_uninstall",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.last_active_date",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-12-23T20:18:55.418000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.status",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.started_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-12-23T06:42:09.177000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.scan_status.finished_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-12-23T07:22:12.146000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.registered_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-28T22:20:12.243000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.last_logged_in_user_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Amy"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "59f5029c75c5fa05c97b9d7a"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.uuid",
+                    "data_type": "string",
+                    "example_values": [
+                        "76f4ffb8922196b4f94c31127e1aad17995d6c05"
+                    ],
+                    "contains": [
+                        "sha1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.encrypted_applications",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.total_memory",
+                    "data_type": "numeric",
+                    "example_values": [
+                        16260
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.cpu_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        8
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.cpu_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "Intel(R) Core(TM) i7-4980HQ CPU @ 2.80GHz"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.machine_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "laptop"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.model_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Apple Inc. - MacBookPro11,5"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.hardware_information.core_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        8
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_start_time",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-12-21T01:01:36Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_revision",
+                    "data_type": "string",
+                    "example_values": [
+                        "No ServicePack Installed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_type",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Windows 10"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.software_information.os_arch",
+                    "data_type": "string",
+                    "example_values": [
+                        "64 bit"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_uninstalled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_active",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_decommissioned",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.meta_data.created_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-10-28T22:20:12.243000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.meta_data.updated_at",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-12-21T16:24:36.886000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.research_data",
+                    "data_type": "string",
+                    "example_values": [
+                        "researchData.collectAndSend"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.auto_mitigation_actions",
+                    "data_type": "string",
+                    "example_values": [
+                        "mitigation.quarantineThreat"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.mitigation_mode_suspicious",
+                    "data_type": "string",
+                    "example_values": [
+                        "protect"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.mitigation_mode",
+                    "data_type": "string",
+                    "example_values": [
+                        "protect"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.configuration.learning_mode",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.user_actions_needed",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.assets.*.version",
+                    "data_type": "string",
+                    "example_values": [
+                        "6077"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.assets.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "static"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.external_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.70.71.37"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.is_up_to_date",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.group_ip",
+                    "data_type": "string",
+                    "example_values": [
+                        "73.70.71.x"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.domain",
+                    "data_type": "string",
+                    "example_values": [
+                        "WORKGROUP"
+                    ],
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.inet6",
+                    "data_type": "string",
+                    "example_values": [
+                        "fe80::24a7:34f5:b6b9:b8da"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Ethernet"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.inet",
+                    "data_type": "string",
+                    "example_values": [
+                        "192.168.1.155"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.interfaces.*.physical",
+                    "data_type": "string",
+                    "example_values": [
+                        "a8:20:66:40:f1:f6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.network_information.computer_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Camper"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.threat_count",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.group_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "59dd993275c5fa05ca34ef45"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.agent_version",
+                    "data_type": "string",
+                    "example_values": [
+                        "2.0.0.6077"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.cpu_usage",
+                    "data_type": "numeric",
+					"column_name": "CPU Usage",
+					"column_order": 2,
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.memory_usage",
+                    "data_type": "numeric",
+					"column_name": "Memory Usage",
+					"column_order": 3,
+                    "example_values": [
+                        10
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.start_time",
+                    "data_type": "string",
+					"column_name": "Start Time",
+					"column_order": 4,
+                    "example_values": [
+                        "2017-12-20T17:01:48.642000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.process_name",
+                    "data_type": "string",
+					"column_name": "Process Name",
+					"column_order": 1,
+                    "example_values": [
+                        "lsass.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.pid",
+                    "data_type": "numeric",
+					"column_name": "PID",
+					"column_order": 0,
+                    "example_values": [
+                        728
+                    ],
+                    "contains": [
+                        "pid"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.*.executable_path",
+                    "data_type": "string",
+					"column_name": "Executable Path",
+					"column_order": 5,
+                    "example_values": [
+                        "\\Device\\HarddiskVolume5\\Windows\\System32\\lsass.exe"
+                    ],
+                    "contains": [
+                        "file name"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.agent_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "59f5029c75c5fa05c97b9d7a"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.ip_hostname",
+                    "data_type": "string",
+                    "example_values": [
+                        "camper"
+                    ],
+                    "contains": [
+                        "host name"
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "quarantine device",
+            "identifier": "quarantine_device",
+            "description": "Quarantine the endpoint",
+            "verbose": "",
+            "type": "contain",
+            "read_only": false,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP of endpoint to quarantine",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "column_name": "ip_hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "scan endpoint",
+            "identifier": "scan_endpoint",
+            "description": "Scan an endpoint for dormant threats",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": false,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP of endpoint to scan",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "column_name": "ip_hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get endpoint info",
+            "identifier": "get_endpoint_info",
+            "description": "Get information about an endpoint",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": false,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP of endpoint to get information",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "column_name": "ip_hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "unquarantine device",
+            "identifier": "unquarantine_device",
+            "description": "Unquarantine the endpoint",
+            "verbose": "",
+            "type": "correct",
+            "read_only": false,
+            "parameters": {
+                "ip_hostname": {
+                    "description": "Hostname/IP of endpoint to unquarantine",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.ip_hostname",
+                    "data_type": "string",
+                    "contains": [
+                        "host name",
+                        "ip"
+                    ],
+                    "column_name": "ip_hostname",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "unblock hash",
+            "identifier": "unblock_hash",
+            "description": "Unblock the hash",
+            "verbose": "",
+            "type": "correct",
+            "read_only": false,
+            "parameters": {
+                "hash": {
+                    "description": "Hash of file to remove from blacklist",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "sha1"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.hash",
+                    "data_type": "string",
+                    "contains": [
+                        "md5",
+                        "sha1",
+                        "sha256",
+                        "hash"
+                    ],
+                    "column_name": "hash",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "mitigate threat",
+            "identifier": "mitigate_threat",
+            "description": "Mitigate identified threat",
+            "verbose": "Mitigate threat such as <b>kill</b>, <b>quarantine</b>, <b>remediate</b>, or <b>rollback</b>",
+            "type": "correct",
+            "read_only": false,
+            "parameters": {
+                "threat_id": {
+                    "description": "The threat ID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "action": {
+                    "description": "Allowed values include: kill, quarantine, un-quarantine, remediate, rollback-remediation",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": false,
+                    "contains": [],
+                    "value_list": [
+                        "kill",
+                        "quarantine",
+                        "un-quarantine",
+                        "remediate",
+                        "rollback-remediation"
+                    ],
+                    "default": "quarantine",
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.threat_id",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "threat_id",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.action",
+                    "data_type": "string",
+                    "contains": [],
+                    "column_name": "action",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
