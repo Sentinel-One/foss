@@ -1,35 +1,32 @@
 {
     "appid": "bb05c97e-dc37-4fbf-9366-d69c542e187a",
     "name": "SentinelOne",
-    "description": "This app integrates with the SentinelOne platform to perform <b>prevention</b>, <b>detection</b>, <b>remediation</b>, and <b>forensics</b> endpoint management tasks.",
+    "description": "This app integrates with the SentinelOne platform to perform <b>prevention</b>, <b>detection</b>, <b>remediation</b>, and <b>forensic</b> endpoint management tasks.",
     "type": "endpoint",
     "product_vendor": "SentinelOne",
     "logo": "sentinelone.png",
     "product_name": "SentinelOne",
     "product_version_regex": ".*",
     "publisher": "SentinelOne",
-    "license": "Copyright SentinelOne 2017",
-    "app_version": "1.2.1",
-    "utctime_updated": "2017-11-21T00:37:30.930877Z",
+    "license": "Copyright SentinelOne 2018",
+    "app_version": "1.2.8",
+    "utctime_updated": "2018-02-22T13:55:47.000000Z",
     "package_name": "phantom_sentinelone",
     "main_module": "sentinelone_connector.pyc",
-    "min_phantom_version": "3.0.265",
+    "min_phantom_version": "3.0.251",
     "app_wizard_version": "1.0.0",
     "configuration": {
         "sentinelone_server_url": {
             "description": "SentinelOne Server URL",
             "data_type": "string",
             "required": true,
-            "value_list": [],
-            "default": "",
+            "default": "https://your-mgmt.sentinelone.net",
             "order": 0
         },
         "access_token": {
             "description": "REST API Access Token",
-            "data_type": "string",
+            "data_type": "password",
             "required": true,
-            "value_list": [],
-            "default": "",
             "order": 1
         }
     },
@@ -52,6 +49,7 @@
             "verbose": "",
             "type": "contain",
             "read_only": false,
+            "undo": "unblock hash",
             "parameters": {
                 "hash": {
                     "description": "Hash of file to blacklist",
@@ -70,7 +68,6 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
                     "value_list": [],
                     "default": "Black listed hash added through Phantom",
                     "order": 1
@@ -80,7 +77,6 @@
                     "data_type": "string",
                     "required": true,
                     "primary": false,
-                    "contains": [],
                     "value_list": [
                         "windows",
                         "osx",
@@ -101,17 +97,19 @@
                     "column_order": 0
                 },
                 {
-                    "data_path": "action_result.parameter.comment",
-                    "data_type": "string",
-                    "contains": [],
-                    "column_name": "comment",
-                    "column_order": 1
+                  "data_path": "action_result.parameter.description",
+                  "data_type": "string"
                 },
+
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "column_name": "status",
-                    "column_order": 2
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.os_family",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -202,7 +200,7 @@
                     "data_path": "action_result.data.*.*.registered_at",
                     "data_type": "string",
                     "example_values": [
-                        "2017-10-28T22:20:12.243000Z"
+                        "2018-02-25T22:20:12.243000Z"
                     ]
                 },
                 {
@@ -955,7 +953,7 @@
                     "data_path": "action_result.data.*.*.agent_version",
                     "data_type": "string",
                     "example_values": [
-                        "2.0.0.6077"
+                        "2.1.2.6003"
                     ]
                 },
                 {
@@ -1050,6 +1048,7 @@
             "description": "Quarantine the endpoint",
             "verbose": "",
             "type": "contain",
+            "undo": "unquarantine device",
             "read_only": false,
             "parameters": {
                 "ip_hostname": {
@@ -1221,6 +1220,7 @@
             "description": "Unquarantine the endpoint",
             "verbose": "",
             "type": "correct",
+            "undo": "quarantine device",
             "read_only": false,
             "parameters": {
                 "ip_hostname": {
@@ -1278,6 +1278,7 @@
             "description": "Unblock the hash",
             "verbose": "",
             "type": "correct",
+            "undo": "block hash",
             "read_only": false,
             "parameters": {
                 "hash": {
@@ -1298,10 +1299,7 @@
                     "data_path": "action_result.parameter.hash",
                     "data_type": "string",
                     "contains": [
-                        "md5",
-                        "sha1",
-                        "sha256",
-                        "hash"
+                        "sha1"
                     ],
                     "column_name": "hash",
                     "column_order": 0
