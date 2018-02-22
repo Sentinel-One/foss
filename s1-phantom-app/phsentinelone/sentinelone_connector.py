@@ -1,14 +1,7 @@
-# -----------------------------------------
-# Phantom sample App Connector python file
-# Lee Wei (leewei@sentinelone.com)
-# -----------------------------------------
-
-# Phantom App imports
 import phantom.app as phantom
 from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
 
-# Usage of the consts file is recommended
 # from sentinelone_consts import *
 import requests
 import json
@@ -112,7 +105,7 @@ class SentineloneConnector(BaseConnector):
 
         return RetVal(action_result.set_status(phantom.APP_ERROR, message), None)
 
-    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method='get'):
 
         config = self.get_config()
 
@@ -130,13 +123,12 @@ class SentineloneConnector(BaseConnector):
         try:
             r = request_func(
                             url,
-                            # auth='Token ' + config.get('access_token', False),
                             json=data,
                             headers=headers,
                             verify=config.get('verify_server_cert', False),
                             params=params)
         except Exception as e:
-            return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
+            return RetVal(action_result.set_status(phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
 
         return self._process_response(r, action_result)
 
@@ -338,9 +330,9 @@ class SentineloneConnector(BaseConnector):
 
         self.save_progress('Agent query: ' + ret_val)
 
-        if (ret_val == '0'):
+        if ret_val == '0':
             return action_result.set_status(phantom.APP_SUCCESS, "Endpoint not found")
-        elif (ret_val == '99'):
+        elif ret_val == '99':
             return action_result.set_status(phantom.APP_SUCCESS, "More than one endpoint found")
         else:
             summary = action_result.update_summary({})
@@ -363,9 +355,9 @@ class SentineloneConnector(BaseConnector):
         ret_val = self._get_agent_id(ip_hostname, action_result)
         self.save_progress('Agent query: ' + ret_val)
 
-        if (ret_val == '0'):
+        if ret_val == '0':
             return action_result.set_status(phantom.APP_SUCCESS, "Endpoint not found")
-        elif (ret_val == '99'):
+        elif ret_val == '99':
             return action_result.set_status(phantom.APP_SUCCESS, "More than one endpoint found")
         else:
             summary = action_result.update_summary({})
@@ -430,9 +422,9 @@ class SentineloneConnector(BaseConnector):
         self.save_progress("Endpoints found: " + str(endpoints_found))
         action_result.add_data(response)
 
-        if (endpoints_found == 0):
+        if endpoints_found == 0:
             return '0'
-        elif (endpoints_found > 1):
+        elif endpoints_found > 1:
             return '99'
         else:
             return response[0]['id']
@@ -525,13 +517,12 @@ if __name__ == '__main__':
     username = args.username
     password = args.password
 
-    if (username is not None and password is None):
-
+    if username is not None and password is None:
         # User specified a username but not a password, so ask
         import getpass
         password = getpass.getpass("Password: ")
 
-    if (username and password):
+    if username and password:
         try:
             print ("Accessing the Login page")
             r = requests.get("https://127.0.0.1/login", verify=False)
@@ -553,8 +544,8 @@ if __name__ == '__main__':
             print ("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
-    if (len(sys.argv) < 2):
-        print "No test json specified as input"
+    if len(sys.argv) < 2:
+        print("No test json specified as input")
         exit(0)
 
     with open(sys.argv[1]) as f:
@@ -565,7 +556,7 @@ if __name__ == '__main__':
         connector = SentineloneConnector()
         connector.print_progress_message = True
 
-        if (session_id is not None):
+        if session_id is not None:
             in_json['user_session_token'] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
