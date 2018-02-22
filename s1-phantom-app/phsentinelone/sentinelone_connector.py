@@ -141,7 +141,7 @@ class SentineloneConnector(BaseConnector):
 
         # make rest call
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         ret_val, response = self._make_rest_call('/web/api/v1.6/threats/summary', action_result, headers=header)
         self.save_progress("response: {0}".format(response))
 
@@ -168,7 +168,7 @@ class SentineloneConnector(BaseConnector):
         summary['description'] = description
 
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         header["Content-Type"] = "application/json"
         body = {"description": description, "os_family": os_family, "is_black": True, "hash": hash}
 
@@ -190,7 +190,7 @@ class SentineloneConnector(BaseConnector):
         summary['hash'] = hash
 
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         header["Content-Type"] = "application/json"
         ret_val, response = self._make_rest_call('/web/api/v1.6/hashes/' + hash, action_result, headers=header, method='delete')
         self.save_progress("response: {0}".format(response))
@@ -211,7 +211,7 @@ class SentineloneConnector(BaseConnector):
 
         # make rest call
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         ret_val, response = self._make_rest_call('/web/api/v1.6/agents', action_result, headers=header)
         self.save_progress("ret_val: {0}".format(ret_val))
         self.save_progress("response: {0}".format(response))
@@ -255,7 +255,7 @@ class SentineloneConnector(BaseConnector):
             # make rest call
             # GET /web/api/v1.6/agents/{id}/processes
             header = self.HEADER
-            header["Authorization"] = "Token %s" % self.token
+            header["Authorization"] = "APIToken %s" % self.token
             ret_val, response = self._make_rest_call('/web/api/v1.6/agents/' + ret_val + '/processes', action_result, headers=header)
             self.save_progress("ret_val: {0}".format(ret_val))
             self.save_progress("response: {0}".format(response))
@@ -287,7 +287,7 @@ class SentineloneConnector(BaseConnector):
 
             # /web/api/v1.6/agents/{id}/disconnect
             header = self.HEADER
-            header["Authorization"] = "Token %s" % self.token
+            header["Authorization"] = "APIToken %s" % self.token
             ret_val, response = self._make_rest_call('/web/api/v1.6/agents/' + ret_val + '/disconnect', action_result, headers=header, method='post')
             self.save_progress("response: {0}".format(response))
 
@@ -314,7 +314,7 @@ class SentineloneConnector(BaseConnector):
 
             # /web/api/v1.6/agents/{id}/connect
             header = self.HEADER
-            header["Authorization"] = "Token %s" % self.token
+            header["Authorization"] = "APIToken %s" % self.token
             ret_val, response = self._make_rest_call('/web/api/v1.6/agents/' + ret_val + '/connect', action_result, headers=header, method='post')
             self.save_progress("response: {0}".format(response))
 
@@ -340,7 +340,7 @@ class SentineloneConnector(BaseConnector):
             summary['agent_id'] = ret_val
 
             header = self.HEADER
-            header["Authorization"] = "Token %s" % self.token
+            header["Authorization"] = "APIToken %s" % self.token
             ret_val, response = self._make_rest_call('/web/api/v1.6/agents/' + ret_val + '/initiate-scan', action_result, headers=header, method='post')
             self.save_progress("response: {0}".format(response))
 
@@ -367,7 +367,7 @@ class SentineloneConnector(BaseConnector):
             # make rest call
             # GET /web/api/v1.6/agents/{id}
             header = self.HEADER
-            header["Authorization"] = "Token %s" % self.token
+            header["Authorization"] = "APIToken %s" % self.token
             ret_val, response = self._make_rest_call('/web/api/v1.6/agents/' + ret_val, action_result, headers=header)
             self.save_progress("ret_val: {0}".format(ret_val))
             self.save_progress("response: {0}".format(response))
@@ -390,7 +390,7 @@ class SentineloneConnector(BaseConnector):
         summary['action'] = action
 
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         header["Content-Type"] = "application/json"
 
         # POST /web/api/v1.6/threats/:threat_id/mitigate/:action
@@ -411,7 +411,7 @@ class SentineloneConnector(BaseConnector):
     def _get_agent_id(self, search_text, action_result):
         # First lookup the Agent ID
         header = self.HEADER
-        header["Authorization"] = "Token %s" % self.token
+        header["Authorization"] = "APIToken %s" % self.token
         ret_val, response = self._make_rest_call('/web/api/v1.6/agents?query=' + search_text, action_result, headers=header)
         self.save_progress("response: {0}".format(response))
 
