@@ -1,5 +1,4 @@
 //
-//  main.m
 //  are-you-really-signed
 //
 //  Created by Matan Mates on 13/06/2018.
@@ -120,7 +119,7 @@ int main(int argc, const char * argv[]) {
             printf("File %s not found!\n", argv[path_arg]);
             return ERR_FILE_NOT_SIGNED;
         }
-        NSURL* target_file_url = [NSURL URLWithString:target_file];
+        NSURL* target_file_url = [NSURL fileURLWithPath:target_file];
         bool valid_insecure = insecure_validation(target_file_url);
         bool valid_secure   = secure_validation(target_file_url, anchor_trusted);
         return get_codesign_status(valid_insecure, valid_secure);
